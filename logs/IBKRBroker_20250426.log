@@ -1,0 +1,11 @@
+2025-04-26 00:23:54,890 - IBKRBroker - INFO - 使用账户ID: DUK175768
+2025-04-26 00:24:00,015 - IBKRBroker - ERROR - 获取账户摘要失败: 'str' object has no attribute 'account'
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_broker.py", line 100, in get_account_summary
+    if item.account not in summary:
+AttributeError: 'str' object has no attribute 'account'
+2025-04-26 00:25:27,027 - IBKRBroker - INFO - 使用账户ID: DUK175768
+2025-04-26 00:25:50,016 - IBKRBroker - INFO - 使用账户ID: DUK175768
+2025-04-26 00:25:55,992 - IBKRBroker - INFO - 使用账户ID: DUK175768
+2025-04-26 00:26:05,196 - IBKRBroker - INFO - 使用账户ID: DUK175768
+2025-04-26 00:27:23,921 - IBKRBroker - INFO - 使用账户ID: DUK175768

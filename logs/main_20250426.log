@@ -1,0 +1,99 @@
+2025-04-26 00:01:01,840 - main - INFO - 程序启动
+2025-04-26 00:01:03,544 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 229, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 209, in main
+    test_connection()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 61, in test_connection
+    broker = create_broker()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 41, in create_broker
+    broker = IBKRBroker(
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_broker.py", line 24, in __init__
+    self.connector = connector or IBKRConnector(**kwargs)
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_connector.py", line 40, in __init__
+    self.is_paper_account = is_paper_account if is_paper_account is not None else IBKR_CONFIG['is_paper_account']
+KeyError: 'is_paper_account'
+2025-04-26 00:01:39,933 - main - INFO - 程序启动
+2025-04-26 00:01:51,856 - main - INFO - 程序启动
+2025-04-26 00:02:06,631 - main - INFO - 程序启动
+2025-04-26 00:05:32,901 - main - INFO - 程序启动
+2025-04-26 00:05:40,133 - main - INFO - 程序启动
+2025-04-26 00:05:40,133 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 210, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 181, in main
+    is_paper_account = args.is_paper
+AttributeError: 'Namespace' object has no attribute 'is_paper'
+2025-04-26 00:05:57,180 - main - INFO - 程序启动
+2025-04-26 00:05:58,764 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 210, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 190, in main
+    test_connection(is_paper_account)
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 61, in test_connection
+    broker = create_broker(is_paper_account)
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 41, in create_broker
+    broker = IBKRBroker(
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_broker.py", line 24, in __init__
+    self.connector = connector or IBKRConnector(**kwargs)
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_connector.py", line 40, in __init__
+    self.is_paper_account = is_paper_account if is_paper_account is not None else IBKR_CONFIG['is_paper_account']
+KeyError: 'is_paper_account'
+2025-04-26 00:06:42,771 - main - INFO - 程序启动
+2025-04-26 00:06:43,685 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 209, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 189, in main
+    test_connection(is_paper_account)
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 60, in test_connection
+    broker = create_broker(is_paper_account)
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 40, in create_broker
+    broker = IBKRBroker(
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_broker.py", line 24, in __init__
+    self.connector = connector or IBKRConnector(**kwargs)
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_connector.py", line 40, in __init__
+    self.is_paper_account = is_paper_account if is_paper_account is not None else IBKR_CONFIG['is_paper_account']
+KeyError: 'is_paper_account'
+2025-04-26 00:07:40,941 - main - INFO - 程序启动
+2025-04-26 00:07:41,715 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 210, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 190, in main
+    test_connection(is_paper_account)
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 61, in test_connection
+    broker = create_broker(is_paper_account)
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 40, in create_broker
+    broker = IBKRBroker(
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_broker.py", line 24, in __init__
+    self.connector = connector or IBKRConnector(**kwargs)
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_connector.py", line 44, in __init__
+    self.read_timeout = read_timeout or IBKR_CONFIG['read_timeout']
+KeyError: 'read_timeout'
+2025-04-26 00:08:06,769 - main - INFO - 程序启动
+2025-04-26 00:09:30,410 - main - INFO - 程序被用户中断
+2025-04-26 00:09:31,950 - main - INFO - 程序启动
+2025-04-26 00:09:41,414 - main - INFO - 程序被用户中断
+2025-04-26 00:10:15,398 - main - INFO - 程序启动
+2025-04-26 00:11:30,178 - main - INFO - 程序被用户中断
+2025-04-26 00:11:31,016 - main - INFO - 程序启动
+2025-04-26 00:13:27,497 - main - INFO - 程序启动
+2025-04-26 00:13:53,086 - main - INFO - 程序被用户中断
+2025-04-26 00:13:57,778 - main - INFO - 程序启动
+2025-04-26 00:14:15,488 - main - INFO - 程序启动
+2025-04-26 00:15:39,428 - main - INFO - 程序启动
+2025-04-26 00:17:11,151 - main - INFO - 程序启动
+2025-04-26 00:23:39,486 - main - INFO - 程序启动
+2025-04-26 00:25:21,731 - main - INFO - 程序启动
+2025-04-26 00:26:13,141 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 211, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 199, in main
+    run_simple_strategy(is_paper_account)
+TypeError: run_simple_strategy() takes 0 positional arguments but 1 was given
+2025-04-26 00:27:14,552 - main - INFO - 程序启动

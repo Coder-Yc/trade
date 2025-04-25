@@ -1,0 +1,255 @@
+2025-04-26 00:08:07,295 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:08:07,453 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:09:07,860 - IBKRConnector - WARNING - 与IBKR的连接已断开
+2025-04-26 00:09:07,860 - IBKRConnector - INFO - 计划在60秒后进行第1次重连
+2025-04-26 00:09:07,860 - IBKRConnector - ERROR - 连接IBKR时发生异常: 
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/tasks.py", line 492, in wait_for
+    fut.result()
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_connector.py", line 137, in connect
+    self.ib.connect(
+  File "/Users/chong/Library/Python/3.9/lib/python/site-packages/ib_insync/ib.py", line 279, in connect
+    return self._run(self.connectAsync(
+  File "/Users/chong/Library/Python/3.9/lib/python/site-packages/ib_insync/ib.py", line 318, in _run
+    return util.run(*awaitables, timeout=self.RequestTimeout)
+  File "/Users/chong/Library/Python/3.9/lib/python/site-packages/ib_insync/util.py", line 341, in run
+    result = loop.run_until_complete(task)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Users/chong/Library/Python/3.9/lib/python/site-packages/ib_insync/ib.py", line 1782, in connectAsync
+    await asyncio.wait_for(self.reqExecutionsAsync(), timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/tasks.py", line 494, in wait_for
+    raise exceptions.TimeoutError() from exc
+asyncio.exceptions.TimeoutError
+2025-04-26 00:09:12,837 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:09:12,970 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:09:12,970 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:09:12,971 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:09:13,279 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:09:35,767 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:09:35,839 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:10:20,303 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:10:20,442 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:10:20,443 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:10:20,944 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:11:52,906 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:11:52,946 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:11:53,356 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:13:45,095 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:14:02,346 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:14:02,385 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:14:02,386 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:14:02,386 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:14:02,386 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:14:02,386 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:14:02,386 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:14:02,386 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:14:02,387 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:14:02,387 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:14:02,387 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:14:02,387 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:14:02,387 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:14:02,799 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:14:27,456 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:14:27,497 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:14:27,498 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:14:27,499 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:14:27,499 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:14:27,499 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:14:27,806 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:15:54,115 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:15:54,163 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:15:54,163 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:15:54,163 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:15:54,163 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:15:54,163 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:15:54,163 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:15:54,164 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:15:54,164 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:15:54,164 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:15:54,164 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:15:54,164 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:15:54,165 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:15:54,573 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:17:16,571 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:17:16,611 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:17:16,611 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:17:16,611 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:17:16,611 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:17:16,612 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:17:17,021 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:23:46,033 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:23:46,084 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:23:46,085 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:23:46,085 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:23:46,085 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:23:46,085 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:23:46,085 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:23:46,394 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:23:54,889 - IBKRConnector - WARNING - 获取服务器时间失败: can't subtract offset-naive and offset-aware datetimes
+2025-04-26 00:23:54,889 - IBKRConnector - INFO - 连接后初始化完成
+2025-04-26 00:25:26,427 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:25:26,476 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:25:26,477 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:25:26,477 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:25:26,477 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:25:26,477 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:25:26,886 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:25:27,026 - IBKRConnector - WARNING - 获取服务器时间失败: can't subtract offset-naive and offset-aware datetimes
+2025-04-26 00:25:27,027 - IBKRConnector - INFO - 连接后初始化完成
+2025-04-26 00:25:45,442 - IBKRConnector - INFO - 断开与IBKR的连接
+2025-04-26 00:25:45,443 - IBKRConnector - WARNING - 与IBKR的连接已断开
+2025-04-26 00:25:49,469 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:25:49,485 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:25:49,485 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:25:49,485 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:25:49,485 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:25:49,486 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:25:49,486 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:25:49,487 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:25:49,487 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:25:49,487 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:25:49,487 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:25:49,487 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:25:49,487 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:25:49,894 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:25:50,016 - IBKRConnector - WARNING - 获取服务器时间失败: can't subtract offset-naive and offset-aware datetimes
+2025-04-26 00:25:50,016 - IBKRConnector - INFO - 连接后初始化完成
+2025-04-26 00:25:53,137 - IBKRConnector - INFO - 断开与IBKR的连接
+2025-04-26 00:25:53,138 - IBKRConnector - WARNING - 与IBKR的连接已断开
+2025-04-26 00:25:55,432 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:25:55,466 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:25:55,466 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:25:55,466 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:25:55,466 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:25:55,467 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:25:55,468 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:25:55,874 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:25:55,992 - IBKRConnector - WARNING - 获取服务器时间失败: can't subtract offset-naive and offset-aware datetimes
+2025-04-26 00:25:55,992 - IBKRConnector - INFO - 连接后初始化完成
+2025-04-26 00:25:57,771 - IBKRConnector - INFO - 断开与IBKR的连接
+2025-04-26 00:25:57,772 - IBKRConnector - WARNING - 与IBKR的连接已断开
+2025-04-26 00:26:04,634 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:26:04,666 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:26:04,666 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:26:04,666 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:26:04,666 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:26:04,667 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:26:04,667 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:26:04,667 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:26:04,667 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:26:04,667 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:26:04,668 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:26:04,668 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:26:04,668 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:26:05,081 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:26:05,195 - IBKRConnector - WARNING - 获取服务器时间失败: can't subtract offset-naive and offset-aware datetimes
+2025-04-26 00:26:05,196 - IBKRConnector - INFO - 连接后初始化完成
+2025-04-26 00:26:10,145 - IBKRConnector - INFO - 断开与IBKR的连接
+2025-04-26 00:26:10,146 - IBKRConnector - WARNING - 与IBKR的连接已断开
+2025-04-26 00:27:23,250 - IBKRConnector - INFO - 连接到IBKR 127.0.0.1:7497 (客户端ID: 1)
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm.nj, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:hfarm, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:jfarm, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfuture, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:cashfarm, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:eufarmnj, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2104]: \u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:usfarm, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:euhmds, reqId=-1
+2025-04-26 00:27:23,294 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:apachmds, reqId=-1
+2025-04-26 00:27:23,295 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:fundfarm, reqId=-1
+2025-04-26 00:27:23,295 - IBKRConnector - WARNING - IBKR警告 [2106]: \u5386\u53f2\u5e02\u573a\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:ushmds, reqId=-1
+2025-04-26 00:27:23,295 - IBKRConnector - WARNING - IBKR警告 [2158]: Sec-def\u6570\u636e\u519c\u573a\u8fde\u63a5\u6b63\u5e38:secdefhk, reqId=-1
+2025-04-26 00:27:23,794 - IBKRConnector - INFO - 成功连接到IBKR 模拟账户 (客户端ID: 1)
+2025-04-26 00:27:23,921 - IBKRConnector - WARNING - 获取服务器时间失败: can't subtract offset-naive and offset-aware datetimes
+2025-04-26 00:27:23,921 - IBKRConnector - INFO - 连接后初始化完成

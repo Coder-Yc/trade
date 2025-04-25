@@ -1,0 +1,40 @@
+2025-04-25 23:52:13,946 - main - INFO - 程序启动
+2025-04-25 23:52:21,470 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 223, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 203, in main
+    test_connection()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 58, in test_connection
+    broker = create_broker()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 40, in create_broker
+    host=IBKR_CONFIG['host'],
+KeyError: 'host'
+2025-04-25 23:54:30,575 - main - INFO - 程序启动
+2025-04-25 23:54:31,973 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 224, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 204, in main
+    test_connection()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 59, in test_connection
+    broker = create_broker()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 39, in create_broker
+    broker = IBKRBroker(
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_broker.py", line 24, in __init__
+    self.connector = connector or IBKRConnector(**kwargs)
+  File "/Users/chong/Desktop/量化/ibkr/broker/ibkr/ibkr_connector.py", line 40, in __init__
+    self.is_paper_account = is_paper_account if is_paper_account is not None else IBKR_CONFIG['is_paper_account']
+KeyError: 'is_paper_account'
+2025-04-25 23:55:12,645 - main - INFO - 程序启动
+2025-04-25 23:55:13,967 - main - ERROR - 程序异常退出
+Traceback (most recent call last):
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 227, in <module>
+    main()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 207, in main
+    test_connection()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 62, in test_connection
+    broker = create_broker()
+  File "/Users/chong/Desktop/量化/ibkr/main.py", line 39, in create_broker
+    is_paper_account = IBKR_CONFIG['is_paper_account']
+KeyError: 'is_paper_account'
