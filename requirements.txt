@@ -1,1 +1,2 @@
 ib_insync
+yfinance>=0.2.12

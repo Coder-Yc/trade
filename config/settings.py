@@ -21,3 +21,10 @@ LOG_CONFIG = {
     'LOG_FORMAT': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     'LOG_DIR': 'logs'
 }
+
+# Yahoo Finance API配置
+YAHOO_DATA_CACHE_DIR = "data/cache/yahoo" 
+
+# 市场数据配置
+MARKET_DATA_CACHE_DIR = "data/cache/market_data"
+DEFAULT_DATA_PROVIDER = "yahoo"  
