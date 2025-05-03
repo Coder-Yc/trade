@@ -36,6 +36,8 @@ def print_header():
     print(" 3. 查看持仓信息")
     print(" 4. 查看订单信息")
     print(" 5. 运行简单策略")
+    print(" 6. 下载数据 (或使用 --download 参数)")
+    print(" 7. 运行回测 (或使用 --backtest 参数)")
     print(" 0. 退出程序")
     print("=" * 60)
 
@@ -180,15 +182,87 @@ def parse_arguments():
     
     # 添加数据下载相关参数
     parser.add_argument('--download', action='store_true', help='下载市场数据')
-    parser.add_argument('--symbols', type=str, help='股票代码，用逗号分隔 (例如: AAPL,MSFT,GOOG)')
+    parser.add_argument('--symbols', type=str, help='股票代码')
     parser.add_argument('--start', type=str, help='开始日期 (YYYY-MM-DD)')
     parser.add_argument('--end', type=str, help='结束日期 (YYYY-MM-DD)')
     parser.add_argument('--period', type=str, help='时间段 (1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max)')
     parser.add_argument('--interval', type=str, default='1d', help='时间间隔 (1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo)')
     parser.add_argument('--format', type=str, default='csv', choices=['csv', 'parquet', 'pickle'], help='保存格式')
     parser.add_argument('--indicators', action='store_true', help='添加技术指标')
+
+    parser.add_argument('--backtest', type=str, help='回测策略名称')
+    parser.add_argument('--start-date', type=str, help='回测开始日期，格式 YYYY-MM-DD')
+    parser.add_argument('--end-date', type=str, help='回测结束日期，格式 YYYY-MM-DD')
+    parser.add_argument('--initial-capital', type=float, default=100000, help='初始资金')
+    
     
     return parser.parse_args()
+
+def load_strategy_class(strategy_name):
+    """
+    从 strategies 目录直接加载策略类
+    
+    Args:
+        strategy_name: 策略名称（文件名，不含 .py 后缀）
+        
+    Returns:
+        策略类
+    """
+    try:
+        # 构建策略模块路径 - 直接从 strategies 目录加载
+        module_path = f"strategies.{strategy_name}"
+        
+        logger.info(f"尝试加载策略模块: {module_path}")
+        
+        try:
+            # 尝试导入模块
+            strategy_module = __import__(module_path, fromlist=['*'])
+        except ImportError as e:
+            logger.error(f"导入策略模块失败: {e}")
+            raise ValueError(f"导入策略模块失败: {e}")
+        
+        # 查找策略类
+        strategy_class = None
+        
+        # 首先，尝试查找符合命名规则的类
+        for name, obj in strategy_module.__dict__.items():
+            logger.debug(f"检查模块对象: {name}, 类型: {type(obj)}")
+            
+            # 查找符合命名规则的类
+            if (name.endswith('Strategy') or name.endswith('strategy')) and hasattr(obj, '__module__'):
+                logger.info(f"找到策略类: {name}")
+                strategy_class = obj
+                break
+        
+        # 如果没有找到策略类，可能是使用了其他命名方式
+        if not strategy_class:
+            # 尝试查找继承自 StrategyBase 的类
+            for name, obj in strategy_module.__dict__.items():
+                if hasattr(obj, '__base__') and hasattr(obj.__base__, '__name__') and obj.__base__.__name__ == 'StrategyBase':
+                    logger.info(f"通过基类找到策略类: {name}")
+                    strategy_class = obj
+                    break
+        
+        # 如果还是没找到，尝试查找任何可能的策略类
+        if not strategy_class:
+            for name, obj in strategy_module.__dict__.items():
+                if ('strategy' in name.lower() or 'Strategy' in name) and hasattr(obj, '__module__'):
+                    logger.info(f"通过名称查找找到策略类: {name}")
+                    strategy_class = obj
+                    break
+        
+        if not strategy_class:
+            logger.error(f"在模块 {module_path} 中未找到有效的策略类")
+            raise ValueError(f"在模块 {module_path} 中未找到有效的策略类")
+        
+        # 返回策略类
+        return strategy_class
+    
+    except Exception as e:
+        logger.error(f"加载策略类失败: {e}")
+        raise
+
+
 
 def download_market_data(args):
     """下载市场数据的命令行功能"""
@@ -514,9 +588,20 @@ def main():
     if args.download:
         return download_market_data(args)
     
+
+    if args.backtest:
+        run_backtest(
+            strategy_name=args.backtest,
+            start_date=args.start_date,
+            end_date=args.end_date,
+            symbols=args.symbols,
+            initial_capital=args.initial_capital
+        )
+        return
+    
     # 获取是否使用模拟账户的参数
     is_paper_account = args.paper
-    
+
     # 进入交互式界面
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')  # 清屏
@@ -536,6 +621,34 @@ def main():
             run_simple_strategy()
         elif choice == "6":
             download_data_interactive()
+        elif choice == "7":
+            print("\n回测模式")
+            strategy_name = input("请输入策略名称 (ma_cross/bollinger/rsi/breakout): ")
+            start_date = input("请输入开始日期 (YYYY-MM-DD，留空使用默认值): ")
+            end_date = input("请输入结束日期 (YYYY-MM-DD，留空使用默认值): ")
+            symbols = input("请输入交易品种 (用逗号分隔，留空使用默认值): ")
+            initial_capital = input("请输入初始资金 (留空使用默认值100000): ")
+            
+            if not start_date:
+                start_date = None
+            if not end_date:
+                end_date = None
+            if not symbols:
+                symbols = None
+            if not initial_capital:
+                initial_capital = 100000
+            else:
+                initial_capital = float(initial_capital)
+            
+            run_backtest(
+                strategy_name=strategy_name,
+                start_date=start_date,
+                end_date=end_date,
+                symbols=symbols,
+                initial_capital=initial_capital
+            )
+            
+            input("\n按Enter键继续...")
         elif choice == "0":
             print("\n退出程序")
             logger.info("程序正常退出")

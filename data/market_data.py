@@ -14,7 +14,6 @@ from data.processors.transformer import DataTransformer
 from data.storage.database import DatabaseManager
 from data.storage.file_storage import FileStorage
 from config.settings import MARKET_DATA_CACHE_DIR, DEFAULT_DATA_PROVIDER
-from config.symbols import SYMBOL_LISTS
 from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -314,18 +313,6 @@ class MarketDataManager:
                 data = yf.Ticker(query).info
                 if data and "shortName" in data:
                     return [{"symbol": query, "name": data["shortName"]}]
-                else:
-                    # 尝试模糊搜索
-                    matches = []
-                    for symbol_list in SYMBOL_LISTS.values():
-                        for symbol, info in symbol_list.items():
-                            if query.lower() in symbol.lower() or (
-                                "name" in info and query.lower() in info["name"].lower()
-                            ):
-                                matches.append({"symbol": symbol, "name": info.get("name", "")})
-                                if len(matches) >= limit:
-                                    return matches
-                    return matches
             except Exception as e:
                 logger.error(f"Yahoo搜索股票时出错: {e}")
                 return []
@@ -670,6 +657,7 @@ class MarketDataManager:
         cache_file = os.path.join(MARKET_DATA_CACHE_DIR, f"{cache_key}.parquet")
         
         if os.path.exists(cache_file):
+            print(f"缓存文件存在: {cache_file}")
             try:
                 cached_data = pd.read_parquet(cache_file)
                 logger.info(f"从缓存加载数据: {cache_file}")
