@@ -1,3 +1,2 @@
 from .ibkr_downloader import IBKRDownloader
-from .external_downloader import ExternalDownloader
 from .yahoo_downloader import YahooDownloader

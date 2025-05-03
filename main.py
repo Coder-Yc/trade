@@ -8,7 +8,7 @@ import sys
 import time
 import argparse
 from datetime import datetime
-
+import pandas as pd
 # 确保可以导入项目模块
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
@@ -17,6 +17,11 @@ sys.path.insert(0, project_root)
 from broker.ibkr.ibkr_broker import IBKRBroker
 from config.settings import IBKR_CONFIG, RECONNECT_CONFIG
 from utils.logger import setup_logger
+
+from data.downloaders.yahoo_downloader import YahooDownloader
+from data.processors.cleaner import DataCleaner
+from data.processors.transformer import DataTransformer
+from data.storage.file_storage import FileStorage
 
 # 设置日志
 logger = setup_logger('main')
@@ -173,19 +178,351 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='量化交易系统')
     parser.add_argument('--paper', action='store_true', help='使用模拟账户')
     
+    # 添加数据下载相关参数
+    parser.add_argument('--download', action='store_true', help='下载市场数据')
+    parser.add_argument('--symbols', type=str, help='股票代码，用逗号分隔 (例如: AAPL,MSFT,GOOG)')
+    parser.add_argument('--start', type=str, help='开始日期 (YYYY-MM-DD)')
+    parser.add_argument('--end', type=str, help='结束日期 (YYYY-MM-DD)')
+    parser.add_argument('--period', type=str, help='时间段 (1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max)')
+    parser.add_argument('--interval', type=str, default='1d', help='时间间隔 (1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo)')
+    parser.add_argument('--format', type=str, default='csv', choices=['csv', 'parquet', 'pickle'], help='保存格式')
+    parser.add_argument('--indicators', action='store_true', help='添加技术指标')
+    
     return parser.parse_args()
+
+def download_market_data(args):
+    """下载市场数据的命令行功能"""
+    # 检查是否提供了股票代码
+    if not args.symbols:
+        print("错误：下载数据需要提供股票代码，使用 --symbols 参数")
+        return 1
+    
+    # 解析股票代码
+    symbols = [s.strip() for s in args.symbols.split(',')]
+    if not symbols:
+        print("错误：未提供有效的股票代码")
+        return 1
+    
+    try:
+        # 初始化组件
+        downloader = YahooDownloader()
+        cleaner = DataCleaner()
+        transformer = DataTransformer()
+        storage = FileStorage()
+        
+        # 处理日期和周期
+        if args.period:
+            print(f"使用周期: {args.period}")
+            start_date, end_date = None, None
+            period = args.period
+        else:
+            end_date = datetime.now()
+            if args.end:
+                end_date = datetime.strptime(args.end, "%Y-%m-%d")
+            
+            start_date = end_date - timedelta(days=365)  # 默认一年
+            if args.start:
+                start_date = datetime.strptime(args.start, "%Y-%m-%d")
+                
+            print(f"日期范围: {start_date.strftime('%Y-%m-%d')} 至 {end_date.strftime('%Y-%m-%d')}")
+            period = None
+        
+        print(f"下载 {len(symbols)} 个股票的数据，间隔: {args.interval}")
+        
+        # 下载数据
+        if period:
+            data_dict = downloader.download_historical_data(
+                symbols=symbols,
+                period=period,
+                interval=args.interval,
+                adjust_ohlc=True
+            )
+        else:
+            data_dict = downloader.download_historical_data(
+                symbols=symbols,
+                start_date=start_date,
+                end_date=end_date,
+                interval=args.interval,
+                adjust_ohlc=True
+            )
+        
+        if not data_dict:
+            print("未能获取数据，请检查股票代码或网络连接")
+            return 1
+        
+        # 合并数据
+        all_data = []
+        for symbol, df in data_dict.items():
+            if not df.empty:
+                all_data.append(df)
+                print(f"{symbol}: 获取了 {len(df)} 行数据")
+        
+        if not all_data:
+            print("没有获取到有效数据")
+            return 1
+        
+        combined_data = pd.concat(all_data)
+        print(f"合并后共 {len(combined_data)} 行数据")
+        
+        # 数据清洗
+        print("清洗数据...")
+        combined_data = cleaner.clean_market_data(combined_data)
+        
+        # 添加技术指标
+        if args.indicators:
+            print("添加技术指标...")
+            combined_data = transformer.add_technical_indicators(combined_data)
+        
+        # 保存数据
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        symbols_str = "_".join(symbols)
+        if len(symbols_str) > 50:
+            symbols_str = symbols_str[:50] + "..."
+        filename = f"{symbols_str}_{args.interval}_{timestamp}"
+
+
+        float_cols = combined_data.select_dtypes(include=['float']).columns.tolist()
+        for col in float_cols:
+            # 去掉所有小数（转为整数）
+            # combined_data[col] = combined_data[col].round(0).astype(int)
+            
+            # 或者保留指定小数位数，例如保留2位小数
+            combined_data[col] = combined_data[col].round(2)
+                
+        file_path = storage.save_data(
+            data=combined_data, 
+            format=args.format, 
+            filename=filename,
+            subdir="market_data"
+        )
+        
+        if file_path:
+            print(f"数据已成功保存到: {file_path}")
+            rows, cols = combined_data.shape
+            print(f"共 {rows} 行 x {cols} 列")
+            return 0
+        else:
+            print("保存数据时出错")
+            return 1
+        
+    except Exception as e:
+        print(f"下载过程中发生错误: {str(e)}")
+        logger.exception("数据下载失败")
+        return 1
+
+def download_data_interactive():
+    """下载市场数据的交互式功能"""
+    os.system('cls' if os.name == 'nt' else 'clear')  # 清屏
+    print("\n" + "=" * 60)
+    print("下载市场数据".center(60))
+    print("=" * 60)
+    
+    # 收集用户输入
+    symbols_input = input("请输入股票代码，多个代码用逗号分隔 (例如: AAPL,MSFT,GOOG): ")
+    symbols = [s.strip() for s in symbols_input.split(',')]
+    
+    # 验证输入
+    if not symbols or not symbols[0]:
+        print("未提供有效的股票代码，返回主菜单")
+        input("\n按Enter键返回主菜单...")
+        return
+    
+    interval_options = {
+        "1": "1d",  # 日线
+        "2": "1wk", # 周线
+        "3": "1mo", # 月线
+        "4": "1h",  # 小时线
+        "5": "5m",  # 5分钟线
+    }
+    
+    print("\n请选择数据间隔:")
+    for k, v in interval_options.items():
+        print(f" {k}. {v}")
+    
+    interval_choice = input("选择 [1-5，默认1]: ").strip() or "1"
+    interval = interval_options.get(interval_choice, "1d")
+    
+    # 时间范围选项
+    print("\n请选择时间范围:")
+    print(" 1. 最近一周")
+    print(" 2. 最近一个月")
+    print(" 3. 最近三个月")
+    print(" 4. 最近六个月")
+    print(" 5. 最近一年")
+    print(" 6. 最近三年")
+    print(" 7. 最近五年")
+    print(" 8. 最长可用历史")
+    print(" 9. 自定义日期范围")
+    
+    range_choice = input("选择 [1-9，默认5]: ").strip() or "5"
+    
+    end_date = datetime.now()
+    start_date = None
+    period = None
+    
+    # 设置日期范围
+    if range_choice == "1":
+        start_date = end_date - timedelta(days=7)
+    elif range_choice == "2":
+        start_date = end_date - timedelta(days=30)
+    elif range_choice == "3":
+        start_date = end_date - timedelta(days=90)
+    elif range_choice == "4":
+        start_date = end_date - timedelta(days=180)
+    elif range_choice == "5":
+        start_date = end_date - timedelta(days=365)
+    elif range_choice == "6":
+        start_date = end_date - timedelta(days=365*3)
+    elif range_choice == "7":
+        start_date = end_date - timedelta(days=365*5)
+    elif range_choice == "8":
+        period = "max"
+        start_date = None
+    elif range_choice == "9":
+        # 自定义日期范围
+        start_date_str = input("请输入开始日期 (YYYY-MM-DD): ")
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+        except ValueError:
+            print("日期格式无效，使用默认一年期")
+            start_date = end_date - timedelta(days=365)
+    else:
+        # 默认一年
+        start_date = end_date - timedelta(days=365)
+    
+    # 询问是否添加技术指标
+    add_indicators = input("\n是否添加常用技术指标 (y/n，默认y): ").lower().strip() != 'n'
+    
+    # 询问保存格式
+    print("\n请选择保存格式:")
+    print(" 1. CSV")
+    print(" 2. Parquet")
+    print(" 3. Pickle")
+    
+    format_choice = input("选择 [1-3，默认1]: ").strip() or "1"
+    if format_choice == "1":
+        save_format = "csv"
+    elif format_choice == "2":
+        save_format = "parquet"
+    elif format_choice == "3":
+        save_format = "pickle"
+    else:
+        save_format = "csv"
+    
+    # 开始下载
+    print(f"\n开始下载 {len(symbols)} 个股票的数据...")
+    
+    try:
+        # 初始化下载器和处理器
+        downloader = YahooDownloader()
+        cleaner = DataCleaner()
+        transformer = DataTransformer()
+        storage = FileStorage()
+        
+        # 下载数据
+        if period:
+            print(f"使用周期: {period}, 间隔: {interval}")
+            data_dict = downloader.download_historical_data(
+                symbols=symbols,
+                period=period,
+                interval=interval,
+                adjust_ohlc=True
+            )
+        else:
+            print(f"使用日期范围: {start_date.strftime('%Y-%m-%d')} 至 {end_date.strftime('%Y-%m-%d')}, 间隔: {interval}")
+            data_dict = downloader.download_historical_data(
+                symbols=symbols,
+                start_date=start_date,
+                end_date=end_date,
+                interval=interval,
+                adjust_ohlc=True
+            )
+        
+        if not data_dict:
+            print("未能获取数据，请检查股票代码或网络连接")
+            input("\n按Enter键返回主菜单...")
+            return
+        
+        # 合并所有数据
+        print("合并数据...")
+        all_data = []
+        for symbol, df in data_dict.items():
+            if not df.empty:
+                all_data.append(df)
+        
+        if not all_data:
+            print("没有获取到有效数据")
+            input("\n按Enter键返回主菜单...")
+            return
+        
+        combined_data = pd.concat(all_data)
+        
+        # 数据清洗
+        print("清洗数据...")
+        cleaned_data = cleaner.clean_market_data(combined_data)
+        
+        # 添加技术指标
+        if add_indicators:
+            print("添加技术指标...")
+            final_data = transformer.add_technical_indicators(cleaned_data)
+        else:
+            final_data = cleaned_data
+        
+        # 保存数据
+        print(f"保存数据为{save_format.upper()}格式...")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        symbols_str = "_".join(symbols)
+        if len(symbols_str) > 50:
+            symbols_str = symbols_str[:50] + "..."
+
+
+        float_cols = combined_data.select_dtypes(include=['float']).columns.tolist()
+        for col in float_cols:
+            # 去掉所有小数（转为整数）
+            # combined_data[col] = combined_data[col].round(0).astype(int)
+            
+            # 或者保留指定小数位数，例如保留2位小数
+            combined_data[col] = combined_data[col].round(2)
+        
+        filename = f"{symbols_str}_{interval}_{timestamp}"
+        file_path = storage.save_data(
+            data=final_data, 
+            format=save_format, 
+            filename=filename,
+            subdir="market_data"
+        )
+        
+        if file_path:
+            print(f"\n数据已成功保存到: {file_path}")
+            rows, cols = final_data.shape
+            print(f"共 {rows} 行 x {cols} 列")
+        else:
+            print("\n保存数据时出错")
+        
+    except Exception as e:
+        print(f"下载过程中发生错误: {str(e)}")
+        logger.exception("数据下载失败")
+    
+    input("\n按Enter键返回主菜单...")
 
 def main():
     """主程序入口"""
     # 解析命令行参数
     args = parse_arguments()
+    
+    # 如果指定了下载参数，直接下载并退出
+    if args.download:
+        return download_market_data(args)
+    
+    # 获取是否使用模拟账户的参数
     is_paper_account = args.paper
     
+    # 进入交互式界面
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')  # 清屏
         print_header()
         
-        choice = input("\n请选择操作 [0-5]: ")
+        choice = input("\n请选择操作 [0-6]: ")
         
         if choice == "1":
             test_connection(is_paper_account)
@@ -196,7 +533,9 @@ def main():
         elif choice == "4":
             view_orders(is_paper_account)
         elif choice == "5":
-            run_simple_strategy(is_paper_account)
+            run_simple_strategy()
+        elif choice == "6":
+            download_data_interactive()
         elif choice == "0":
             print("\n退出程序")
             logger.info("程序正常退出")
@@ -204,6 +543,7 @@ def main():
         else:
             print("\n无效选择，请重新输入")
             time.sleep(1)
+
 
 if __name__ == "__main__":
     try:

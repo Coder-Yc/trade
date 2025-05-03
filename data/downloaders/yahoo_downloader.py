@@ -1,5 +1,5 @@
 # data/downloaders/yahoo_downloader.py
-
+import os
 import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
@@ -7,9 +7,9 @@ import logging
 from typing import List, Dict, Union, Optional, Tuple
 
 from config.settings import YAHOO_DATA_CACHE_DIR
-from utils.logger import get_logger
+from utils.logger import setup_logger
 
-logger = get_logger(__name__)
+logger = setup_logger(__name__)
 
 class YahooDownloader:
     """Yahoo Finance数据下载器，提供从Yahoo Finance获取历史和实时市场数据的功能"""

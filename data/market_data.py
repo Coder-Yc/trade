@@ -8,7 +8,6 @@ import logging
 from typing import List, Dict, Union, Optional, Tuple, Any
 
 from data.downloaders.ibkr_downloader import IBKRDownloader
-from data.downloaders.external_downloader import ExternalDownloader
 from data.downloaders.yahoo_downloader import YahooDownloader
 from data.processors.cleaner import DataCleaner
 from data.processors.transformer import DataTransformer
@@ -16,9 +15,9 @@ from data.storage.database import DatabaseManager
 from data.storage.file_storage import FileStorage
 from config.settings import MARKET_DATA_CACHE_DIR, DEFAULT_DATA_PROVIDER
 from config.symbols import SYMBOL_LISTS
-from utils.logger import get_logger
+from utils.logger import setup_logger
 
-logger = get_logger(__name__)
+logger = setup_logger(__name__)
 
 class MarketDataManager:
     """市场数据管理类，集中管理各种数据源的数据获取、处理和存储"""
@@ -29,7 +28,6 @@ class MarketDataManager:
         # 初始化各数据下载器
         self.yahoo_downloader = YahooDownloader()
         self.ibkr_downloader = IBKRDownloader()
-        self.external_downloader = ExternalDownloader()
         
         # 初始化数据处理器
         self.cleaner = DataCleaner()
@@ -178,15 +176,7 @@ class MarketDataManager:
         interval: str = "1d",
         adjust_prices: bool = True
     ) -> pd.DataFrame:
-        """
-        从IBKR获取市场数据
-        
-        Args:
-            参数与get_market_data相同
-            
-        Returns:
-            包含IBKR数据的DataFrame
-        """
+
         logger.info(f"从IBKR获取{len(symbols)}个股票的数据")
         
         # 处理日期
@@ -229,15 +219,6 @@ class MarketDataManager:
         end_date = end_date or datetime.now()
         start_date = start_date or (end_date - timedelta(days=30))
         
-        # 使用外部下载器
-        data = self.external_downloader.download_data(
-            symbols=symbols,
-            start_date=start_date,
-            end_date=end_date,
-            interval=interval,
-            source=source
-        )
-        
         # 标准化数据格式
         return self._standardize_data_format(data)
     
@@ -262,8 +243,6 @@ class MarketDataManager:
             return self.yahoo_downloader.get_latest_price(symbols)
         elif provider == "ibkr":
             return self.ibkr_downloader.get_latest_prices(symbols)
-        elif provider == "external":
-            return self.external_downloader.get_latest_prices(symbols)
         else:
             logger.error(f"不支持的数据提供商: {provider}")
             return {}

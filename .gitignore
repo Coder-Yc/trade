@@ -1,0 +1,6 @@
+data/storage/files/market_data
+data/cache/
+logs/
+**/__pycache__/
+
+.DS_Store
