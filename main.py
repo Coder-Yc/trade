@@ -198,71 +198,168 @@ def parse_arguments():
     
     return parser.parse_args()
 
-def load_strategy_class(strategy_name):
+def run_backtest(strategy_name=None, symbol=None, start_date=None, end_date=None, initial_capital=100000, interval=None):
     """
-    从 strategies 目录直接加载策略类
+    运行回测功能
     
     Args:
-        strategy_name: 策略名称（文件名，不含 .py 后缀）
-        
-    Returns:
-        策略类
+        strategy_name: 策略名称，如 'moving_average'
+        symbol: 股票代码，如 'AAPL'
+        start_date: 开始日期，格式 'YYYY-MM-DD'
+        end_date: 结束日期，格式 'YYYY-MM-DD'
+        initial_capital: 初始资金，默认100000
     """
-    try:
-        # 构建策略模块路径 - 直接从 strategies 目录加载
-        module_path = f"strategies.{strategy_name}"
+    print("\n开始回测流程...")
+    
+    # 获取所有策略文件
+    all_strategies = []
+    strategies_dir = os.path.join(project_root, 'strategies')
+    
+    # 递归遍历strategies目录下的所有.py文件
+    for root, dirs, files in os.walk(strategies_dir):
+        if os.path.basename(root) == '__pycache__' or os.path.basename(root) == '':
+            continue
         
-        logger.info(f"尝试加载策略模块: {module_path}")
+        for file in files:
+            if file.endswith('.py') and not file.startswith('__'):
+                strategy_file = os.path.splitext(file)[0]
+                relative_path = os.path.relpath(root, strategies_dir)
+                if relative_path == '.':
+                    module_path = f"strategies.{strategy_file}"
+                else:
+                    module_path = f"strategies.{relative_path}.{strategy_file}"
+                all_strategies.append((strategy_file, module_path))
+    
+    # 如果没有提供策略名称，显示可用策略
+    if strategy_name is None:
+        print("\n可用策略:")
+        for i, (name, _) in enumerate(all_strategies, 1):
+            print(f" {i}. {name}")
         
         try:
-            # 尝试导入模块
-            strategy_module = __import__(module_path, fromlist=['*'])
-        except ImportError as e:
-            logger.error(f"导入策略模块失败: {e}")
-            raise ValueError(f"导入策略模块失败: {e}")
+            idx = int(input(f"\n选择策略 [1-{len(all_strategies)}]: ")) - 1
+            if idx < 0 or idx >= len(all_strategies):
+                print("无效选择!")
+                return
+            strategy_name, module_path = all_strategies[idx]
+        except ValueError:
+            print("请输入有效数字!")
+            return
+    else:
+        # 查找匹配的策略
+        matches = [(name, path) for name, path in all_strategies if name == strategy_name]
+        if not matches:
+            print(f"找不到策略 '{strategy_name}'!")
+            print("可用策略:")
+            for name, _ in all_strategies:
+                print(f" - {name}")
+            return
+        strategy_name, module_path = matches[0]
+    
+    # 如果没有提供股票代码，请求输入
+    if symbol is None:
+        symbol = input("\n输入股票代码 (例如: AAPL): ").strip().upper()
+        if not symbol:
+            print("必须输入股票代码!")
+            return
+    
+    # 如果没有提供日期范围，请求输入
+    if start_date is None:
+        start_date = input("\n开始日期 (YYYY-MM-DD): ")
+    
+    if end_date is None:
+        end_date = input("结束日期 (YYYY-MM-DD): ")
+    
+    print(f"\n正在回测 {strategy_name} 策略，股票：{symbol}，时间段：{start_date} 至 {end_date}...")
+    
+    # 导入策略模块
+    try:
+        strategy_module = __import__(module_path, fromlist=["*"])
         
-        # 查找策略类
+        # 从模块中找到策略类
+        from strategies.strategy_base import StrategyBase
         strategy_class = None
         
-        # 首先，尝试查找符合命名规则的类
-        for name, obj in strategy_module.__dict__.items():
-            logger.debug(f"检查模块对象: {name}, 类型: {type(obj)}")
-            
-            # 查找符合命名规则的类
-            if (name.endswith('Strategy') or name.endswith('strategy')) and hasattr(obj, '__module__'):
-                logger.info(f"找到策略类: {name}")
+        for name in dir(strategy_module):
+            obj = getattr(strategy_module, name)
+            if (isinstance(obj, type) and 
+                issubclass(obj, StrategyBase) and 
+                obj != StrategyBase):
                 strategy_class = obj
                 break
         
-        # 如果没有找到策略类，可能是使用了其他命名方式
-        if not strategy_class:
-            # 尝试查找继承自 StrategyBase 的类
-            for name, obj in strategy_module.__dict__.items():
-                if hasattr(obj, '__base__') and hasattr(obj.__base__, '__name__') and obj.__base__.__name__ == 'StrategyBase':
-                    logger.info(f"通过基类找到策略类: {name}")
-                    strategy_class = obj
-                    break
+        if strategy_class is None:
+            print(f"在 {strategy_name} 中未找到有效的策略类!")
+            return
         
-        # 如果还是没找到，尝试查找任何可能的策略类
-        if not strategy_class:
-            for name, obj in strategy_module.__dict__.items():
-                if ('strategy' in name.lower() or 'Strategy' in name) and hasattr(obj, '__module__'):
-                    logger.info(f"通过名称查找找到策略类: {name}")
-                    strategy_class = obj
-                    break
+        # 获取策略参数
+        import inspect
+        sig = inspect.signature(strategy_class.__init__)
+        params = {}
         
-        if not strategy_class:
-            logger.error(f"在模块 {module_path} 中未找到有效的策略类")
-            raise ValueError(f"在模块 {module_path} 中未找到有效的策略类")
+        for name, param in list(sig.parameters.items())[1:]:  # 跳过self
+            if param.default != inspect.Parameter.empty:
+                default = param.default
+                value = input(f"参数 {name} (默认: {default}): ")
+                
+                if not value:  # 用户未输入，使用默认值
+                    params[name] = default
+                else:
+                    # 尝试类型转换
+                    try:
+                        if isinstance(default, int):
+                            params[name] = int(value)
+                        elif isinstance(default, float):
+                            params[name] = float(value)
+                        elif isinstance(default, bool):
+                            params[name] = value.lower() in ('true', 'yes', 'y', '1')
+                        else:
+                            params[name] = value
+                    except ValueError:
+                        print(f"无效值，使用默认值 {default}")
+                        params[name] = default
         
-        # 返回策略类
-        return strategy_class
-    
+        # 创建策略实例
+        strategy = strategy_class(**params)
+        
+        # 创建回测引擎并运行
+        from backtest.engine import BacktestEngine
+        
+        engine = BacktestEngine(
+            strategy=strategy,
+            symbol=symbol,
+            start_date=start_date,
+            end_date=end_date,
+            initial_capital=initial_capital,
+            interval=interval, 
+        )
+        
+        # 运行回测
+        results = engine.run()
+        
+        # 分析结果
+        engine.analyze_results()
+        
+        # 保存结果
+        save = input("\n保存结果? (y/n): ").lower()
+        if save == 'y':
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            results_dir = os.path.join(project_root, "backtest", "results")
+            os.makedirs(results_dir, exist_ok=True)
+            
+            filename = f"{strategy_name}_{symbol}_{timestamp}.csv"
+            results.to_csv(os.path.join(results_dir, filename))
+            print(f"结果已保存到: {os.path.join(results_dir, filename)}")
+        
+        return results
+        
+    except ImportError as e:
+        print(f"导入模块时出错: {e}")
     except Exception as e:
-        logger.error(f"加载策略类失败: {e}")
-        raise
-
-
+        print(f"回测过程中出错: {e}")
+    
+    input("\n按Enter键继续...")
+  
 
 def download_market_data(args):
     """下载市场数据的命令行功能"""
@@ -352,7 +449,7 @@ def download_market_data(args):
         symbols_str = "_".join(symbols)
         if len(symbols_str) > 50:
             symbols_str = symbols_str[:50] + "..."
-        filename = f"{symbols_str}_{args.interval}_{timestamp}"
+        filename = f"{symbols_str}_{args.interval}"
 
 
         float_cols = combined_data.select_dtypes(include=['float']).columns.tolist()
@@ -594,8 +691,9 @@ def main():
             strategy_name=args.backtest,
             start_date=args.start_date,
             end_date=args.end_date,
-            symbols=args.symbols,
-            initial_capital=args.initial_capital
+            symbol=args.symbols,
+            initial_capital=args.initial_capital,
+            interval=args.interval
         )
         return
     
@@ -628,6 +726,7 @@ def main():
             end_date = input("请输入结束日期 (YYYY-MM-DD，留空使用默认值): ")
             symbols = input("请输入交易品种 (用逗号分隔，留空使用默认值): ")
             initial_capital = input("请输入初始资金 (留空使用默认值100000): ")
+            interval = input("请输入回测周期 (1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max): ")
             
             if not start_date:
                 start_date = None
@@ -644,8 +743,9 @@ def main():
                 strategy_name=strategy_name,
                 start_date=start_date,
                 end_date=end_date,
-                symbols=symbols,
-                initial_capital=initial_capital
+                symbol=symbols,
+                initial_capital=initial_capital,
+                interval=interval
             )
             
             input("\n按Enter键继续...")

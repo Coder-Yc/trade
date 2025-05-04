@@ -194,33 +194,6 @@ class MarketDataManager:
         # 标准化数据格式
         return self._standardize_data_format(data)
     
-    def get_external_data(
-        self, 
-        symbols: List[str], 
-        start_date: Optional[Union[str, datetime]] = None,
-        end_date: Optional[Union[str, datetime]] = None,
-        interval: str = "1d",
-        source: str = "default"
-    ) -> pd.DataFrame:
-        """
-        从外部源获取市场数据
-        
-        Args:
-            参数与get_market_data相同
-            source: 外部数据源名称
-            
-        Returns:
-            包含外部数据的DataFrame
-        """
-        logger.info(f"从外部源{source}获取{len(symbols)}个股票的数据")
-        
-        # 处理日期
-        end_date = end_date or datetime.now()
-        start_date = start_date or (end_date - timedelta(days=30))
-        
-        # 标准化数据格式
-        return self._standardize_data_format(data)
-    
     def get_latest_prices(
         self, 
         symbols: List[str], 
@@ -468,13 +441,6 @@ class MarketDataManager:
                 end_date=end_date,
                 interval=interval,
                 adjust_prices=adjust_prices
-            )
-        elif provider == "external":
-            return self.get_external_data(
-                symbols=symbols,
-                start_date=start_date,
-                end_date=end_date,
-                interval=interval
             )
         else:
             logger.error(f"不支持的数据提供商: {provider}")
